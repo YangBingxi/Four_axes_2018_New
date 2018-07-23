@@ -25,7 +25,7 @@
 #include "inc/hw_memmap.h"
 
 extern bool Control_Open;
-
+extern bool FindFire;
 
 extern float volatile  Real_Distance,Last_Real_Distance;
 extern int int_distance;
@@ -225,10 +225,17 @@ void Timer1IntHandler(void)
 //       OutPut_Data();
 //       UARTprintf("%d\t%d\t%d\n",err_x,err_y);
 
+       //先让FindFire=true
+//       FindFire = true;
+//       if(FindFire&&fabs((int)get_x - CAMERA_MID_X)<40&&fabs((int)get_y - CAMERA_MID_Y)<40&&fabs((int)get_x - CAMERA_MID_X)!=0)
+//           LaserSet(1);
+//       else
+//           LaserSet(0);
+
        PID_Data_X.Error = err_x;
        PID_Data_Y.Error = err_y;
        Position_PID();
-       if(Real_Distance>200&&Control_Open&&Coordinate_Open_Flag)
+       if(Real_Distance>300&&Control_Open&&Coordinate_Open_Flag)
        {
            Coordinate_Open_Flag = false;
            start_PID_X = true;
@@ -242,18 +249,18 @@ void Timer1IntHandler(void)
        if(start_PID_X&&start_PID_Y)
        {
            Set_Alltitute(      /*函数形参的roll、pitch位置相反*/                    \
-                   -((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06,\
-                   -((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06,\
+            (int)(-((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06),\
+            (int)(-((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06),\
                                                                                  0,\
                                                                                  0);
            Set_Alltitute(      /*函数形参的roll、pitch位置相反*/                    \
-                   -((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06,\
-                   -((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06,\
+            (int)(-((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06),\
+            (int)(-((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06),\
                                                                                  0,\
                                                                                  0);
            Set_Alltitute(      /*函数形参的roll、pitch位置相反*/                    \
-                   -((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06,\
-                   -((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06,\
+            (int)(-((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06),\
+            (int)(-((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06),\
                                                                                  0,\
                                                                                  0);
 //           UARTprintf("roll%d\t pitch%d\n",(int)(-((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06),\
@@ -279,7 +286,6 @@ void Timer1IntHandler(void)
                                                                                 0,\
                                                                                 0);
       }
-
     }
 
     TimerIntEnable(TIMER1_BASE, TIMER_A);

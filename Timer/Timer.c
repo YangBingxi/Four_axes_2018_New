@@ -23,13 +23,16 @@
 #include "inc/hw_memmap.h"
 #include "Type_conversion/Type_conversion.h"
 #include "driverlib/gpio.h"
-
+#include "delay/delay.h"
 char Time_Flag = 0;
 uint32_t Counter = 0;
 uint8_t Beep_Flag = 0;
 uint32_t Beep_Counter = 0;
 uint32_t Beep_Fre = 40;
 extern  float Real_Distance;
+extern bool start_PID_X ;
+extern bool start_PID_Y;
+extern bool Control_Open;
 
 /**
   * 函 数 名:MotorContolTimer.c
@@ -155,18 +158,31 @@ void Timer2_Config(void)
         TimerEnable(TIMER2_BASE, TIMER_A);
 }
 uint32_t TimeCounter = 0;
-uint8_t m=0;
+uint8_t m=0,l=0;
 void Timer2IntHandler(void)
 {
     uint32_t ui32IntStatus;
     ui32IntStatus = TimerIntStatus(TIMER2_BASE, true);
     TimerIntClear(TIMER2_BASE, ui32IntStatus);//清除中断标志位
+
     TimeCounter++;
-    if(TimeCounter==130)
+    if(TimeCounter>120)
     {
-        //前飞模式
-        //定点测试用降落模式
-        LandMode();LandMode();
+        start_PID_Y = false;
+        for(l=0;l<10;l++)
+        {
+            //前飞模式
+            Set_Alltitute(      /*函数形参的roll、pitch位置相反*/                    \
+                                                                                 40,\
+                                                                                  0,\
+                                                                                  0,\
+                                                                                  0);
+            Delay_ms(100);
+        }
+        start_PID_Y = true;
+        // 定点测试用降落模式
+        //   LandMode();
+        TimerDisable(TIMER2_BASE, TIMER_A);
     }
     m =~ m;
     if(m)

@@ -94,6 +94,7 @@ void HardwareConfig(void)
 }
 
 int main(void)
+
 {
     FPUEnable();        //开启浮点运算
     FPULazyStackingEnable();
@@ -112,9 +113,10 @@ int main(void)
             UARTprintf("GET_x=%d,GET_y=%d\n",get_x,get_y);
             Display();//显示函数
         }
-        if(Real_Distance>1000)
+        if(Real_Distance>1200)//1.3M以上开启定时器计时15s后往前飞
         {
             //开启定时器
+
             Timer2_Config();
         }
         Delay_ms(500);

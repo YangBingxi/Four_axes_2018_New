@@ -28,7 +28,7 @@
 //高度:单位 MM
 float  Real_Distance,Last_Real_Distance;
 extern int Distance_Laser;
-
+extern bool FindFire = false;
 
 uint16_t Goal_XCoordinate,Goal_YCoordinate;
 uint16_t Real_XCoordinate,Real_YCoordinate;
@@ -146,7 +146,9 @@ void Lock(void)
     }
     remote[15]=0xAA;
     UART2Send(remote,16);//发送指令
+    Delay_ms(1);
     UART2Send(remote,16);//发送指令
+    Delay_ms(1);
 }
 /**
   * 函 数 名:LandMode
@@ -170,8 +172,8 @@ void LandMode(void)
     }
     remote[15]=0xAA;
     UART2Send(remote,16);//发送指令
-    UART2Send(remote,16);//发送指令
-
+    Delay_ms(1);
+   // UART2Send(remote,16);//发送指令
 }
 
 void Get_Coordinate(void)
@@ -240,4 +242,15 @@ void Display(void)
     OLED_ShowString(6,6,"RealDis:",16);
     OLED_ShowNum(56,6,Real_Distance,4,16);
     OLED_ShowString(88,6,"MM",16);
+}
+/*
+ * 激光状态：
+ * 高电平有效
+ */
+void LaserSet(uint8_t LaserState)
+{
+    if(LaserState)
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, GPIO_PIN_3);
+    else
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, 0);
 }

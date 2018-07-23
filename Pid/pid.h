@@ -21,7 +21,7 @@
 #define CAMERA_MID_Y    60
 
 
-#define DEFAULT_KP_X        1.90f
+#define DEFAULT_KP_X        1.90
 #define DEFAULT_KI_X        0.00f
 #define DEFAULT_KD_X        1.00f
 

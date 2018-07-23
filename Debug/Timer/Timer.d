@@ -22,6 +22,7 @@ Timer/Timer.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.L
 Timer/Timer.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/linkage.h
 Timer/Timer.obj: D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdarg.h
 Timer/Timer.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/gpio.h
+Timer/Timer.obj: F:/ProjectFile/ccs/Four_axes_2018_New/delay/delay.h
 
 ../Timer/Timer.c: 
 ../Timer/Timer.h: 
@@ -45,3 +46,4 @@ D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/_ti_co
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/linkage.h: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdarg.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/gpio.h: 
+F:/ProjectFile/ccs/Four_axes_2018_New/delay/delay.h: 

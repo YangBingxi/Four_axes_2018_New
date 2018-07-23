@@ -18,5 +18,6 @@ void FloatToByte(float floatNum,unsigned char* byteArry);
 void OledDisplayInit(void);
 
 void Display(void);
+void LaserSet(uint8_t LaserState);
 
 #endif /* CONTROL_CONTROL_H_ */
