@@ -204,6 +204,7 @@ void Timer1IntHandler(void)
     // Update the interrupt status on the display.
     //
     TimerIntDisable(TIMER1_BASE, TIMER_A);
+ //   Control_Open = true;
     if(Control_Open)
     {
     /*
@@ -222,15 +223,16 @@ void Timer1IntHandler(void)
        err_x = (int)(Real_Distance/1000.0 * ((int)get_x - CAMERA_MID_X));
        err_y = (int)(Real_Distance/1000.0 * ((int)get_y - CAMERA_MID_Y));
 //       OutPut_Data();
-       UARTprintf("%d\t%d\t%d\n",err_x,err_y);
+//       UARTprintf("%d\t%d\t%d\n",err_x,err_y);
 
        PID_Data_X.Error = err_x;
        PID_Data_Y.Error = err_y;
        Position_PID();
-       if(Real_Distance>300&&Control_Open&&Coordinate_Open_Flag)
+       if(Real_Distance>200&&Control_Open&&Coordinate_Open_Flag)
        {
            Coordinate_Open_Flag = false;
            start_PID_X = true;
+
            start_PID_Y = true;
        }
 //       if(start_PID_X)
@@ -238,11 +240,46 @@ void Timer1IntHandler(void)
 //       if(start_PID_Y)
 //           PwmControl_2((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT));
        if(start_PID_X&&start_PID_Y)
-           Set_Alltitute(                                                         \
-                   ((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882-897.06,\
-                   ((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882-897.06,\
+       {
+           Set_Alltitute(      /*函数形参的roll、pitch位置相反*/                    \
+                   -((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06,\
+                   -((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06,\
+                                                                                 0,\
+                                                                                 0);
+           Set_Alltitute(      /*函数形参的roll、pitch位置相反*/                    \
+                   -((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06,\
+                   -((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06,\
+                                                                                 0,\
+                                                                                 0);
+           Set_Alltitute(      /*函数形参的roll、pitch位置相反*/                    \
+                   -((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06,\
+                   -((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06,\
+                                                                                 0,\
+                                                                                 0);
+//           UARTprintf("roll%d\t pitch%d\n",(int)(-((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06),\
+//                      (int)(-((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06));
+           UARTprintf(" %d\t%d\t%d\t%d\t%d\n",err_x,err_y,(int)Real_Distance,(int)(-((int)(channel_val_MID+(int)PID_Data_X.PID_OUT))*0.5882+897.06),\
+                                            (int)(-((int)(channel_val_MID+(int)PID_Data_Y.PID_OUT))*0.5882+897.06));
+       }
+       else
+       {
+          Set_Alltitute(                                                          \
+                                                                                0,\
+                                                                                0,\
                                                                                 0,\
                                                                                 0);
+          Set_Alltitute(                                                          \
+                                                                                0,\
+                                                                                0,\
+                                                                                0,\
+                                                                                0);
+          Set_Alltitute(                                                          \
+                                                                                0,\
+                                                                                0,\
+                                                                                0,\
+                                                                                0);
+      }
+
     }
 
     TimerIntEnable(TIMER1_BASE, TIMER_A);

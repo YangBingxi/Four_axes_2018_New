@@ -40,6 +40,7 @@ main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018_New/Pid/pid.h
 main.obj: F:/ProjectFile/ccs/Four_axes_2018/colorful_LED/colorful_LED.h
+main.obj: ../0.96'OLED/OLED.h
 
 ../main.c: 
 D:/Project_Program/Ccs/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/include/stdint.h: 
@@ -81,3 +82,4 @@ D:/ti/TivaWare_C_Series-2.1.4.178/grlib/grlib.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/Four_axes_2018_New/Pid/pid.h: 
 F:/ProjectFile/ccs/Four_axes_2018/colorful_LED/colorful_LED.h: 
+../0.96'OLED/OLED.h: 

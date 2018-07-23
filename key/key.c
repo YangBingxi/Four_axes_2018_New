@@ -14,12 +14,15 @@
   * Github：
   ******************************************************************************
 **/
+#include <0.96'OLED/OLED.h>
+#include <0.96'OLED/OLED.h>
+
 #include "key.h"
 #include "Control/Control.h"
 uint32_t ReadPin0;
 uint32_t ReadPin4;
 int KeyPress4=0;
-extern uint8_t Control_Open;
+extern bool Control_Open;
 extern float volatile Real_Distance ;
 extern uint16_t  Goal_Distance;//默认定高值800mm
 void Key_Configure(void)
@@ -99,6 +102,8 @@ void Int_Handler_GPIOF(void)
     {
         GPIOIntDisable(GPIO_PORTF_BASE, GPIO_PIN_4);                     //打开外部中断
         UART1Send("Key2 Is OK\n",11);
+        Control_Open = true;
+        OLED_ShowString(90,3,"ON ",16);
         Unlock();
         while(!GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4));
     }

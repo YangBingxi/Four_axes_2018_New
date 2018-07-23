@@ -20,20 +20,21 @@
 #define CAMERA_MID_X    80
 #define CAMERA_MID_Y    60
 
-#define DEFAULT_KP_X        2.4f
-#define DEFAULT_KI_X        0.00f
-#define DEFAULT_KD_X        0.74f
 
-#define DEFAULT_KP_Y        1.8f
+#define DEFAULT_KP_X        1.90f
+#define DEFAULT_KI_X        0.00f
+#define DEFAULT_KD_X        1.00f
+
+#define DEFAULT_KP_Y        1.90f
 #define DEFAULT_KI_Y        0.00f
-#define DEFAULT_KD_Y        0.66f
+#define DEFAULT_KD_Y        1.00f
 
 #define DEFAULT_KP_H        3.0f
 #define DEFAULT_KI_H        0.0f
 #define DEFAULT_KD_H        0.0f
 
 #define DEFAULT_I_MAX       50.0f
-#define DEFAULT_OUT_MAX     80.0f
+#define DEFAULT_OUT_MAX     255.0f
 #define DEFAULT_PID_FREQ    50.0f
 
 #define DEFAULT_LPFITER         3.1830e-3

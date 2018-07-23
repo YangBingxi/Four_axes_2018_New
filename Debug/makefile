@@ -12,6 +12,7 @@ GEN_CMDS__FLAG :=
 ORDERED_OBJS += \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
+"./0.96'OLED/OLED.obj" \
 "./Control/Control.obj" \
 "./Pid/pid.obj" \
 "./Timer/Timer.obj" \
@@ -34,6 +35,7 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include 0.96'OLED/subdir_vars.mk
 -include Control/subdir_vars.mk
 -include Pid/subdir_vars.mk
 -include Timer/subdir_vars.mk
@@ -43,6 +45,7 @@ RMDIR := RMDIR /S/Q
 -include key/subdir_vars.mk
 -include uart/subdir_vars.mk
 -include subdir_rules.mk
+-include 0.96'OLED/subdir_rules.mk
 -include Control/subdir_rules.mk
 -include Pid/subdir_rules.mk
 -include Timer/subdir_rules.mk
@@ -181,8 +184,8 @@ Four_axes_2018_New.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "Control\Control.obj" "Pid\pid.obj" "Timer\Timer.obj" "Type_conversion\Type_conversion.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "Control\Control.d" "Pid\pid.d" "Timer\Timer.d" "Type_conversion\Type_conversion.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "uart\uart_echo.d" "uart\uartstdio.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "0.96'OLED\OLED.obj" "Control\Control.obj" "Pid\pid.obj" "Timer\Timer.obj" "Type_conversion\Type_conversion.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "0.96'OLED\OLED.d" "Control\Control.d" "Pid\pid.d" "Timer\Timer.d" "Type_conversion\Type_conversion.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "uart\uart_echo.d" "uart\uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

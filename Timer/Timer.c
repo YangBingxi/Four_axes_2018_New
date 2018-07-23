@@ -22,6 +22,7 @@
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "Type_conversion/Type_conversion.h"
+#include "driverlib/gpio.h"
 
 char Time_Flag = 0;
 uint32_t Counter = 0;
@@ -99,7 +100,7 @@ void Timer1_Config(void)
        //
         TimerConfigure(TIMER1_BASE, TIMER_CFG_PERIODIC);
 
-        TimerLoadSet(TIMER1_BASE, TIMER_A,  1600000); //Fre = 主频/1600000 = 50HZ
+        TimerLoadSet(TIMER1_BASE, TIMER_A,  4000000); //Fre = 主频/4000000 = 20HZ
 
        //
        // Setup the interrupts for the timer timeouts.
@@ -140,7 +141,7 @@ void Timer2_Config(void)
        //
         TimerConfigure(TIMER2_BASE, TIMER_CFG_PERIODIC);
 
-        TimerLoadSet(TIMER2_BASE, TIMER_A,  2000000); //Fre = 主频/2000000 = 40HZ
+        TimerLoadSet(TIMER2_BASE, TIMER_A,  8000000); //Fre = 主频/8000000 = 10HZ
 
        //
        // Setup the interrupts for the timer timeouts.
@@ -153,10 +154,23 @@ void Timer2_Config(void)
        //
         TimerEnable(TIMER2_BASE, TIMER_A);
 }
+uint32_t TimeCounter = 0;
+uint8_t m=0;
 void Timer2IntHandler(void)
 {
     uint32_t ui32IntStatus;
     ui32IntStatus = TimerIntStatus(TIMER2_BASE, true);
     TimerIntClear(TIMER2_BASE, ui32IntStatus);//清除中断标志位
-    SendToFlight(Real_Distance);
+    TimeCounter++;
+    if(TimeCounter==130)
+    {
+        //前飞模式
+        //定点测试用降落模式
+        LandMode();LandMode();
+    }
+    m =~ m;
+    if(m)
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+    else
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, 0);
 }

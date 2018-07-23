@@ -179,7 +179,7 @@ void Uart0Iint(void)
      //
      // Configure the UART for 115,200, 8-N-1 operation.
      //
-     UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
+     UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 9600,
                              (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                               UART_CONFIG_PAR_NONE));
 
@@ -499,14 +499,22 @@ UART3IntHandler(void)
     }
 
 // //   UARTSend()
-//    UART3Send("Rec: ",4);
-//    UART3Send(ReciveData_UART3, ReciveData_i_UART3);
+//    UART1Send("Rec: ",4);
+//    UART1Send(ReciveData_UART3, ReciveData_i_UART3);
 //参数获取
+//    if(ReciveData_UART3[0]=='X'&&ReciveData_UART3[7]=='Y')
+//    {
+//        Real_XCoordinate = (ReciveData_UART3[1]-48)*100+(ReciveData_UART3[2]-48)*10+(ReciveData_UART3[3]-48);
+//        Real_YCoordinate = (ReciveData_UART3[4]-48)*100+(ReciveData_UART3[5]-48)*10+(ReciveData_UART3[6]-48);
+//    }
+//    UARTprintf("x=%d,y=%d\n",Real_XCoordinate,Real_YCoordinate);
     if(ReciveData_UART3[0]=='X'&&ReciveData_UART3[3]=='Y')
-    {
-        Real_XCoordinate = ReciveData_UART3[1];
-        Real_YCoordinate = ReciveData_UART3[2];
-    }
+       {
+   //        Real_XCoordinate = (ReciveData_UART3[1]-48)*100+(ReciveData_UART3[2]-48)*10+(ReciveData_UART3[3]-48);
+   //        Real_YCoordinate = (ReciveData_UART3[4]-48)*100+(ReciveData_UART3[5]-48)*10+(ReciveData_UART3[6]-48);
+           Real_XCoordinate = ReciveData_UART3[1];
+           Real_YCoordinate = ReciveData_UART3[2];
+       }
 }
 
 

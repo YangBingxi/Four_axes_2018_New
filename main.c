@@ -40,6 +40,12 @@
 #include "Pid/pid.h"
 #include "head.h"
 #include "colorful_LED.h"
+#include "0.96'OLED/OLED.h"
+
+
+extern float  Real_Distance;
+extern volatile uint8_t get_x, get_y;
+extern bool Control_Open;
 
 
 /**
@@ -58,19 +64,31 @@ void HardwareConfig(void)
     UART2Iint();        //串口2初始化
     UART3Iint();        //串口3初始化
 
-
+    /*
+     * 定时器1执行PID算法调节pitch、roll
+     * 定时器2执行高度发送
+     * 备注：定时器2弃用
+     */
     //Timer0_Config();    //定时器初始化
     Timer1_Config();
-    Timer2_Config();
+    //Timer2_Config();
 
-    LED_Config();    //LED初始化
+    LED_Config();           //LED初始化
     LED_Set(BLUE);
 
-    Key_Configure();    //按键初始化
-    Key_Interrupt();    //按键中断
+    /*
+     * 按键执行一键启动
+     */
+    Key_Configure();        //按键初始化
+    Key_Interrupt();        //按键中断
+
+    OLED_Init();            //初始化OLED
+    OLED_Clear();
 
     IntMasterEnable();
-
+    /*
+     * Pid调节roll、pitch
+     */
     PID_Init();
 
 }
@@ -83,9 +101,22 @@ int main(void)
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN); //主频设置80M
     HardwareConfig();
     //UARTprintf("Hello\n");
-
+    OledDisplayInit();  //初始化OLED显示界面
     while(1)
     {
+        if(Control_Open==false)
+        {
+            Get_Distance();//获取高度
+            Get_Coordinate();
+            UARTprintf("RealDistance:%d\n",(int)Real_Distance);
+            UARTprintf("GET_x=%d,GET_y=%d\n",get_x,get_y);
+            Display();//显示函数
+        }
+        if(Real_Distance>1000)
+        {
+            //开启定时器
+            Timer2_Config();
+        }
         Delay_ms(500);
     }
 }
